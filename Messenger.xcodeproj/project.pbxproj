@@ -19,6 +19,7 @@
 		0819BD3829DB297600BB8987 /* VideoPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0819BD3729DB297600BB8987 /* VideoPlayerVC.swift */; };
 		0819BD3A29DB298C00BB8987 /* NewConversationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0819BD3929DB298C00BB8987 /* NewConversationVC.swift */; };
 		0819BD3C29DB29AE00BB8987 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0819BD3B29DB29AE00BB8987 /* ProfileVC.swift */; };
+		0819BD3F29DB33C900BB8987 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0819BD3E29DB33C900BB8987 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		0819BD3729DB297600BB8987 /* VideoPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerVC.swift; sourceTree = "<group>"; };
 		0819BD3929DB298C00BB8987 /* NewConversationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationVC.swift; sourceTree = "<group>"; };
 		0819BD3B29DB29AE00BB8987 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		0819BD3E29DB33C900BB8987 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 			children = (
 				0819BD1729DB251800BB8987 /* AppDelegate.swift */,
 				0819BD1929DB251800BB8987 /* SceneDelegate.swift */,
+				0819BD3E29DB33C900BB8987 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -107,8 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				0819BD1B29DB251800BB8987 /* ConversationsVC.swift */,
-				0819BD3129DB28DC00BB8987 /* LoginVC.swift */,
-				0819BD3329DB291700BB8987 /* RegisterVC.swift */,
+				0819BD3D29DB2D2900BB8987 /* Login */,
 				0819BD3529DB295200BB8987 /* PhotoViewerVC.swift */,
 				0819BD3729DB297600BB8987 /* VideoPlayerVC.swift */,
 				0819BD3929DB298C00BB8987 /* NewConversationVC.swift */,
@@ -131,6 +133,15 @@
 				0819BD2229DB251900BB8987 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		0819BD3D29DB2D2900BB8987 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0819BD3129DB28DC00BB8987 /* LoginVC.swift */,
+				0819BD3329DB291700BB8987 /* RegisterVC.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +220,7 @@
 				0819BD1C29DB251800BB8987 /* ConversationsVC.swift in Sources */,
 				0819BD3C29DB29AE00BB8987 /* ProfileVC.swift in Sources */,
 				0819BD1829DB251800BB8987 /* AppDelegate.swift in Sources */,
+				0819BD3F29DB33C900BB8987 /* Extensions.swift in Sources */,
 				0819BD3229DB28DC00BB8987 /* LoginVC.swift in Sources */,
 				0819BD3629DB295200BB8987 /* PhotoViewerVC.swift in Sources */,
 				0819BD1A29DB251800BB8987 /* SceneDelegate.swift in Sources */,
