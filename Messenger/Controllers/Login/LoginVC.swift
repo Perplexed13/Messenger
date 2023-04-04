@@ -125,7 +125,11 @@ class LoginVC: UIViewController {
                   return
         }
         //Firebase Log In
-        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { authResult , error in
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult , error in
+            guard let strongSelf = self else {
+                return
+            }
+            
             guard let result = authResult, error == nil else {
                 print("Failed to log in user with email: \(email)")
                 return
@@ -133,6 +137,7 @@ class LoginVC: UIViewController {
             
             let user = result.user
             print("Logged in user is \(user)")
+            strongSelf.navigationController?.dismiss(animated: true)
         })
     }
     
