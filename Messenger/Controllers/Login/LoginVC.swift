@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
 
 class LoginVC: UIViewController {
     
@@ -67,8 +68,29 @@ class LoginVC: UIViewController {
         return button
     }()
     
+    private let googleLogInButton = GIDSignInButton()
+    
+    private var loginObserver: NSObjectProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification,
+                                                               object: nil,
+                                                               queue: .main,
+                                                               using: { [weak self] _ in
+            
+            guard let strongSelf = self else {
+                
+                return
+            }
+            
+            strongSelf.navigationController?.dismiss(animated: true)
+            
+        })
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        
         title = "Log In"
         view.backgroundColor = .white
         
@@ -86,7 +108,14 @@ class LoginVC: UIViewController {
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
+        scrollView.addSubview(googleLogInButton)
         
+    }
+    
+    deinit {
+        if let observer = loginObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -107,6 +136,10 @@ class LoginVC: UIViewController {
                                   height: 52)
         loginButton.frame = CGRect(x: 30,
                                   y: passwordField.bottom + 10,
+                                  width: scrollView.width - 60,
+                                  height: 52)
+        googleLogInButton.frame = CGRect(x: 30,
+                                  y: loginButton.bottom + 10,
                                   width: scrollView.width - 60,
                                   height: 52)
     }

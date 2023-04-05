@@ -9,6 +9,9 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database' 
 
+
+pod 'GoogleSignIn', '~>5.0.2'
+
   # Pods for Messenger
 
 end

@@ -591,12 +591,6 @@ static NSString *const kFIRAuthErrorMessageUnsupportedTenantOperation =
     @"This operation is not"
      "supported in a multi-tenant context.";
 
-/** @var kFIRAuthErrorMessageBlockingCloudFunctionReturnedError
-    @brief Message for @c FIRAuthErrorCodeBlockingCloudFunctionError error code.
- */
-static NSString *const kFIRAuthErrorMessageBlockingCloudFunctionReturnedError =
-    @"Blocking cloud function returned an error.";
-
 /** @var FIRAuthErrorDescription
     @brief The error descrioption, based on the error code.
     @remarks No default case so that we get a compiler warning if a new value was added to the enum.
@@ -761,8 +755,6 @@ static NSString *FIRAuthErrorDescription(FIRAuthErrorCode code) {
       return kFIRAuthErrorMessageTenantIDMismatch;
     case FIRAuthErrorCodeUnsupportedTenantOperation:
       return kFIRAuthErrorMessageUnsupportedTenantOperation;
-    case FIRAuthErrorCodeBlockingCloudFunctionError:
-      return kFIRAuthErrorMessageBlockingCloudFunctionReturnedError;
   }
 }
 
@@ -930,8 +922,6 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
       return @"ERROR_TENANT_ID_MISMATCH";
     case FIRAuthErrorCodeUnsupportedTenantOperation:
       return @"ERROR_UNSUPPORTED_TENANT_OPERATION";
-    case FIRAuthErrorCodeBlockingCloudFunctionError:
-      return @"ERROR_BLOCKING_CLOUD_FUNCTION_RETURNED_ERROR";
   }
 }
 
@@ -1311,14 +1301,12 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
 
 #if TARGET_OS_IOS
 + (NSError *)secondFactorRequiredErrorWithPendingCredential:(NSString *)MFAPendingCredential
-                                                      hints:(NSArray<FIRMultiFactorInfo *> *)hints
-                                                       auth:(FIRAuth *)auth {
+                                                      hints:(NSArray<FIRMultiFactorInfo *> *)hints {
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
   if (MFAPendingCredential && hints) {
     FIRMultiFactorResolver *resolver =
         [[FIRMultiFactorResolver alloc] initWithMFAPendingCredential:MFAPendingCredential
-                                                               hints:hints
-                                                                auth:auth];
+                                                               hints:hints];
     userInfo[FIRAuthErrorUserInfoMultiFactorResolverKey] = resolver;
   }
   return [self errorWithCode:FIRAuthInternalErrorCodeSecondFactorRequired userInfo:userInfo];
@@ -1415,32 +1403,6 @@ static NSString *const FIRAuthErrorCodeString(FIRAuthErrorCode code) {
 
 + (NSError *)unsupportedTenantOperationError {
   return [self errorWithCode:FIRAuthInternalErrorCodeUnsupportedTenantOperation];
-}
-
-+ (NSError *)blockingCloudFunctionServerResponseWithMessage:(nullable NSString *)message {
-  if (message == nil) {
-    return [self errorWithCode:FIRAuthInternalErrorBlockingCloudFunctionError message:message];
-  }
-
-  NSString *jsonString =
-      [message stringByReplacingOccurrencesOfString:@"HTTP Cloud Function returned an error:"
-                                         withString:@""];
-  jsonString = [jsonString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-  NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-  NSError *jsonError;
-  NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                           options:0
-                                                             error:&jsonError];
-
-  if (jsonError) {
-    return [self JSONSerializationErrorWithUnderlyingError:jsonError];
-  }
-
-  NSDictionary *errorDict = jsonDict[@"error"];
-  NSString *errorMessage = errorDict[@"message"];
-
-  return [self errorWithCode:FIRAuthInternalErrorBlockingCloudFunctionError message:errorMessage];
 }
 
 @end

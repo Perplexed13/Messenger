@@ -88,7 +88,6 @@ static NSString *const kCustomUrlSchemePrefix = @"app-";
                                                rawNonce:nil
                                             accessToken:accessToken
                                                  secret:nil
-                                               fullName:nil
                                            pendingToken:nil];
 }
 
@@ -99,7 +98,6 @@ static NSString *const kCustomUrlSchemePrefix = @"app-";
                                                rawNonce:nil
                                             accessToken:accessToken
                                                  secret:nil
-                                               fullName:nil
                                            pendingToken:nil];
 }
 
@@ -112,7 +110,6 @@ static NSString *const kCustomUrlSchemePrefix = @"app-";
                                                rawNonce:rawNonce
                                             accessToken:accessToken
                                                  secret:nil
-                                               fullName:nil
                                            pendingToken:nil];
 }
 
@@ -124,19 +121,6 @@ static NSString *const kCustomUrlSchemePrefix = @"app-";
                                                rawNonce:rawNonce
                                             accessToken:nil
                                                  secret:nil
-                                               fullName:nil
-                                           pendingToken:nil];
-}
-
-+ (FIROAuthCredential *)appleCredentialWithIDToken:(NSString *)IDToken
-                                          rawNonce:(nullable NSString *)rawNonce
-                                          fullName:(nullable NSPersonNameComponents *)fullName {
-  return [[FIROAuthCredential alloc] initWithProviderID:@"apple.com"
-                                                IDToken:IDToken
-                                               rawNonce:rawNonce
-                                            accessToken:nil
-                                                 secret:nil
-                                               fullName:fullName
                                            pendingToken:nil];
 }
 
