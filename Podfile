@@ -12,6 +12,11 @@ pod 'Firebase/Database'
 
 pod 'GoogleSignIn', '~>5.0.2'
 
+pod 'MessageKit'
+pod 'JGProgressHUD'
+pod 'RealmSwift'
+pod 'SDWebImage'
+
   # Pods for Messenger
 
 end
