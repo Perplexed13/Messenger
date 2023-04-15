@@ -10,7 +10,7 @@ import FirebaseAuth
 
 class ConversationsVC: UIViewController {
     
-    private table: UITableView{
+    private let table: UITableView = {
         let table = UITableView()
         return table
     }()

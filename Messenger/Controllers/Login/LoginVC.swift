@@ -169,6 +169,8 @@ class LoginVC: UIViewController {
             }
             
             let user = result.user
+            
+            UserDefaults.standard.set(email, forKey: "email")
             print("Logged in user is \(user)")
             strongSelf.navigationController?.dismiss(animated: true)
         })

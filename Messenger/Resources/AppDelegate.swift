@@ -42,10 +42,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
             return
         }
         
+        UserDefaults.standard.set(email, forKey: "email")
+        
         DatabaseManager.shared.userExists(with: email, completion: { exists in
             if !exists {
                 // insert to database
-                DatabaseManager.shared.insertUser(with: ChatAppUser(name: name, surname: surname, email: email))
+                let chatUser =  ChatAppUser(name: name, surname: surname, email: email)
+                DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
+                    if success {
+                        //upload images
+                        if user.profile.hasImage {
+                            guard let url = user.profile.imageURL(withDimension: 200) else {
+                                return
+                            }
+                            
+                            URLSession.shared.dataTask(with: url, completionHandler: {data, _, _ in
+                                guard let data = data else {
+                                    return
+                                }
+                                let filename = chatUser.profilePicturesFileName
+                                StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: {result in
+                                    switch result {
+                                    case .success(let downloadUrl):
+                                        UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                        print(downloadUrl)
+                                    case .failure(let error):
+                                        print("Storage manager error: \(error)")
+                                        
+                                    }
+                                })
+                            })
+                        }
+                        
+                        let filename = chatUser.profilePicturesFileName
+                        StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: { result in
+                            switch result {
+                            case .success(let downloadUrl):
+                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                print(downloadUrl)
+                            case .failure(let error):
+                                print("Storage manager error: \(error)")
+                                
+                            }
+                            
+                        })
+                    }
+                })
             }
         })
         
