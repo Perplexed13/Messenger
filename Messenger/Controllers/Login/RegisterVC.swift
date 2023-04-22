@@ -7,8 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterVC: UIViewController {
+    
+    private let spinner = JGProgressHUD(style: .dark)
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -189,12 +192,20 @@ class RegisterVC: UIViewController {
             alertUserLoginError()
             return
         }
+        
+        spinner.show(in: view)
+        
         //Firebase Log In
         
         DatabaseManager.shared.userExists(with: email, completion: { [weak self] exists in
             guard let strongSelf = self else {
                 return
             }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss(animated: true)
+            }
+            
             guard !exists else {
                 // user already exists
                 strongSelf.alertUserLoginError(message: "This email already exists. Please use another email for the registration.")

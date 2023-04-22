@@ -10,7 +10,6 @@ pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
 
-
 pod 'GoogleSignIn', '~>5.0.2'
 
 pod 'MessageKit'
@@ -18,6 +17,14 @@ pod 'JGProgressHUD'
 pod 'RealmSwift'
 pod 'SDWebImage'
 
-  # Pods for Messenger
+post_install do |installer|
+  installer.generated_projects.each do |project|
+    project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+         end
+    end
+  end
+end
 
 end

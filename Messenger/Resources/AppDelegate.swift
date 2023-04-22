@@ -73,19 +73,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate{
                                 })
                             })
                         }
-                        
-                        let filename = chatUser.profilePicturesFileName
-                        StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: { result in
-                            switch result {
-                            case .success(let downloadUrl):
-                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
-                                print(downloadUrl)
-                            case .failure(let error):
-                                print("Storage manager error: \(error)")
-                                
-                            }
-                            
-                        })
                     }
                 })
             }
